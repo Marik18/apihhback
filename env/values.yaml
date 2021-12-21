@@ -1,0 +1,55 @@
+replicaCount: 1
+
+strategy: 
+    type: Recreate
+    
+image:
+    repository: docker.trainee.ru.com/CI_PROJECT_NAME
+    pullPolicy: Always
+    tag: "0.1.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+    create: true
+    annotation: {}
+    name: ""
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+
+service:
+    type: ClusterIP
+    port: EXPOSE_PORT
+
+ingress:
+    enabled: true
+    className: ""
+    annotations: {} 
+    hosts:
+        - host: CI_PROJECT_NAME.apps.ocp4.trainee.ru.com
+          paths:
+              - path: /
+                pathType: ImplementationSpecific
+    tls: []
+
+resources:
+    limits:
+        cpu: 300m
+        memory: 550Mi
+    requests:
+        cpu: 100m
+        memory: 200Mi
+
+autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
